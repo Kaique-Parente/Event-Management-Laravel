@@ -14,7 +14,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        return EventResource::collection(Event::with('user', 'attend')->get());
+        return EventResource::collection(
+            Event::with('user', 'attendees')->paginate()
+        );
     }
 
     /**
@@ -32,7 +34,7 @@ class EventController extends Controller
             'user_id' => 1
         ]);
 
-        $event->load('user', 'attend');
+        $event->load('user', 'attendees');
         return new EventResource($event);
     }
 
@@ -41,7 +43,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $event->load('user', 'attend');
+        $event->load('user', 'attendees');
         return new EventResource($event);
     }
 
@@ -58,7 +60,7 @@ class EventController extends Controller
                 'end_time' => 'sometimes|after:start_time'
             ])
         );
-        $event->load('user', 'attend');
+        $event->load('user', 'attendees');
         return new EventResource($event);
     }
 

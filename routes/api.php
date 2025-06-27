@@ -12,4 +12,4 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('events', EventController::class);
 
 Route::apiResource('events.attendees', AttendController::class)
-    ->scoped(['attend'=> 'events']);
+    ->scoped();
